@@ -10,8 +10,6 @@ pipeline {
                 sh 'docker build -t ppawlowski186/webservice .'
             }
         }
-    }
-    stages {
         stage('Push Image to DockerHub ') {
             steps {
                 withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhubpwd')]) {
