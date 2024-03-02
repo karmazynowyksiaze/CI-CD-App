@@ -20,7 +20,7 @@ variable "container_name_prefix" {
 
 variable "image" {
   type    = string
-  default = "jenkins/jenkins:lts"
+  default = "ppawlowski186/jenkins-docker"
 }
 
 variable "port" {
