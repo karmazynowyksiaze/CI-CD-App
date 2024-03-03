@@ -6,6 +6,16 @@ pipeline {
                 checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/karmazynowyksiaze/CI-CD-App']]])
             }
         }
+        stage('UserCheck') {
+            steps{
+                script{
+                    def build = currentBuild.rawBuild
+                    def cause = build.getCause(hudson.model.Cause.UserIdCause.class)
+                    def name = cause.getUserName()
+                    echo "User: " + name
+                }
+            }
+        }
         stage('Build Docker Image') {
             steps {
                 script{
@@ -25,3 +35,4 @@ pipeline {
         }
     }
 }
+  
