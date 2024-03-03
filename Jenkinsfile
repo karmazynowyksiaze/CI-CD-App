@@ -1,11 +1,10 @@
 pipeline {
     agent any
-    enviorment {
+     environment {
         dockerImage=''
         registry='ppawlowski186/webservice'
         registryCredential='dockerhub_id'
     }
-
     stages {
         stage('GitCheckout'){
             steps{
