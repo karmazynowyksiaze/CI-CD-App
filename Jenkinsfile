@@ -1,6 +1,6 @@
 pipeline {
     agent any
-     environment {
+    environment {
         dockerImage=''
         registry='ppawlowski186/webservice'
         registryCredential='dockerhub_id'
