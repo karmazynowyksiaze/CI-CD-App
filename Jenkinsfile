@@ -1,5 +1,11 @@
 pipeline {
     agent any
+    enviorment {
+        dockerImage=''
+        registry='ppawlowski186/webservice'
+        registryCredential='dockerhub_id'
+    }
+
     stages {
         stage('GitCheckout'){
             steps{
@@ -9,17 +15,24 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script{
-                    sh 'docker build -t ppawlowski186/webservice .'
+                    dockerImage = docker.build registry
                 }
             }
         }
         stage('Push Image to DockerHub ') {
             steps {
                 script{
-                    withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhubpwd')]) {
-                        sh 'docker login -u ppawlowski186 -p ${dockerhubpwd}'
+                    docker.withRegistry('', registryCredential){
+                        dockerImage.push
                     }
-                sh 'docker push ppawlowski186/webservice'
+                }
+            }
+        }
+        stage('Stop docker container'){
+            steps{
+                script{
+                    sh 'docker ps -f name=webserviceContainer -q | xargs --no-run-if-empty docker container stop'
+                    sh 'docker container ls -a -fname=webserviceContainer -q | xargs -r docker container rm'
                 }
             }
         }
