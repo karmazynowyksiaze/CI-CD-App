@@ -1,10 +1,10 @@
 variable "instance_count" {
-  default = "3"
+  default = "2"
 }
 
 variable "instance_tags" {
   type    = list(string)
-  default = ["AnsibleServer", "JenkinsServer", "HTTPServer"]
+  default = ["JenkinsServer", "HTTPServer"]
 }
 
 variable "ami" {

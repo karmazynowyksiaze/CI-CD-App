@@ -6,6 +6,11 @@ pipeline {
                 checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/karmazynowyksiaze/CI-CD-App']]])
             }
         }
+        stage('GitClone'){
+            steps{
+                git([url: 'https://github.com/karmazynowyksiaze/CI-CD-App.git', branch: 'main', credentialsId: 'karmazynowyksiaze'])
+            }
+        }
         stage('Build Docker Image') {
             steps {
                 script{
